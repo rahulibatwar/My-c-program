@@ -3,13 +3,20 @@
 int main() {
     int age;
 
-    // Yeh loop exactly 3 baar chalega (i = 1, i = 2, i = 3)
-    for (int i = 1; i <= 3; i++) {
-        printf("\n--- Person Number %d ---\n", i);
-        
-        printf("Apni umar (Age) enter kijiye: ");
+    printf("--- Welcome to Dynamic Voter Checker ---\n");
+    printf("(Program band karne ke liye Age ko '0' enter karein)\n");
+
+    // while(1) ka matlab hai yeh loop hamesha chalta rahega jab tak hum break nahi karte
+    while (1) {
+        printf("\nAge enter kijiye: ");
         scanf("%d", &age); 
 
+        // Condition 1: Agar user ne 0 dala, toh loop ko yahin tod do (Exit)
+        if (age == 0) {
+            break; 
+        }
+
+        // Condition 2: Voter checker logic
         if (age >= 18) {
             printf("Aap ek adult hain aur vote de sakte hain! \n");
         } 
@@ -17,10 +24,10 @@ int main() {
             printf("Aap ek teenager hain. \n");
         } 
         else {
-            printf("Aap abhi bacche hain. \n");
+            printf("Aap abhi bache hain. \n");
         }
     }
 
-    printf("\nSabhi logon ka data check ho gaya! Program Khatam.\n");
+    printf("\nProgram safely closed. Thank you! 🙏\n");
     return 0;
 }
