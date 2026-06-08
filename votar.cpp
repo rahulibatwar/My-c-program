@@ -1,16 +1,19 @@
-#include <iostream> // C ke stdio.h ki jagah C++ mein iostream use hota hai
+#include <iostream>
 using namespace std;
 
-// Ek 'Voter' naam ki Class banayi (Blueprint)
 class Voter {
 public:
-    // Properties (Variables)
     int age;
 
-    // Method (Function jo class ke andar hota hai)
+    // 🎯 CONSTRUCTOR: Jaise hi object banega, yeh khud chal jayega!
+    Voter() {
+        cout << "[System Notification]: Ek naya Voter Object memory mein create ho gaya hai!" << endl;
+        age = 18; // Humne default age 18 set kar di
+    }
+
     bool checkEligibility() {
         if (age >= 18) {
-            return true; // C++ mein built-in true/false boolean hota hai
+            return true;
         } else {
             return false;
         }
@@ -18,20 +21,21 @@ public:
 };
 
 int main() {
-    // Class ka ek Real Object banaya
-    Voter person1;
+    cout << "--- Constructor Demo Shuru ---" << endl << endl;
 
-    cout << "--- Welcome to C++ OOPs Voter Checker ---" << endl;
-    cout << "Person 1 ki age enter kijiye: ";
+    // Jaise hi yeh line chalegi, constructor automatic fire hoga!
+    Voter person1; 
     
-    // User se input lene ka modern C++ tarika
-    cin >> person1.age; 
+    cout << "Default age jo constructor ne set ki: " << person1.age << endl << endl;
 
-    // Object ke andar ke function ko call kiya
+    // Ab user se nayi age maangte hain
+    cout << "Apni nayi umar (Age) enter kijiye: ";
+    cin >> person1.age;
+
     if (person1.checkEligibility()) {
-        cout << "Aap vote de sakte hain! (C++ Object Verified)" << endl;
+        cout << "✅ Aap vote de sakte hain!" << endl;
     } else {
-        cout << "Maaf kijiye, aap abhi vote nahi de sakte." << endl;
+        cout << "❌ Maaf kijiye, aap abhi vote nahi de sakte." << endl;
     }
 
     return 0;
