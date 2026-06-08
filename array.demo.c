@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Humne vahi return type wala function yahan phir se banaya
+// Hamara return-type function bilkul pehle jaisa hi hai
 int checkEligibility(int age) {
     if (age >= 18) {
         return 1; // Eligible
@@ -10,15 +10,22 @@ int checkEligibility(int age) {
 }
 
 int main() {
-    // 5 alag-alag logon ki ages ka array
-    int ages[5] = {20, 15, 32, 12, 26};
+    // Ek khali array banaya jo 5 integers store kar sakta hai
+    int ages[5]; 
 
-    printf("--- Array Voter Eligibility Report ---\n\n");
+    printf("--- Dynamic Array Voter Input ---\n");
+    printf("Kripya 5 logon ki age ek-ek karke enter kijiye:\n\n");
 
-    // Loop automatic array ke har element par chalega
+    // LOOP 1: Array ke andar data bharne (Input lene) ke liye
     for (int i = 0; i < 5; i++) {
-        
-        // ages[i] ka matlab hai: pehle ages[0], phir ages[1], phir ages[2]...
+        printf("Person %d ki age daliye: ", i + 1);
+        scanf("%d", &ages[i]); // Jo bhi input aayega, wo ages[i] par save hoga
+    }
+
+    printf("\n--- Generating Final Eligibility Report ---\n\n");
+
+    // LOOP 2: Array se data nikal kar process karne ke liye
+    for (int i = 0; i < 5; i++) {
         int result = checkEligibility(ages[i]);
 
         printf("Person %d (Age: %d) -> ", i + 1, ages[i]);
@@ -30,6 +37,6 @@ int main() {
         }
     }
 
-    printf("\nReport complete! Sabhi elements check ho gaye.\n");
+    printf("\nAll done! Program complete.\n");
     return 0;
 }
