@@ -1,60 +1,57 @@
 #include <iostream>
 using namespace std;
 
-// 1️⃣ PARENT CLASS (Base Class)
+// 1️⃣ BASE CLASS (Parent)
 class Voter {
-protected: // protected likhne se child class is variable ko direct use kar sakti hai
-    int age; 
+protected:
+    int age;
 
 public:
-    Voter() {
-        age = 18; // Default age
+    // Constructor
+    Voter(int initialAge) {
+        age = initialAge;
     }
 
-    void setAge(int inputAge) {
-        if (inputAge > 0 && inputAge <= 120) {
-            age = inputAge;
-        }
-    }
-
-    int getAge() {
-        return age;
-    }
-
-    bool checkEligibility() {
-        return age >= 18;
+    // Parent ka base function jise hum override karenge
+    void showStatus() {
+        cout << "[Standard Voter] Age: " << age << " | Status: Checking via general queue..." << endl;
     }
 };
 
-// 2️⃣ CHILD CLASS (Derived Class) - Syntax dhyan se dekhiye ': public Voter'
+// 2️⃣ DERIVED CLASS (Child)
 class SpecialVoter : public Voter {
 public:
-    int specialPassID; // Child ka apna naya variable
+    int specialPassID;
 
-    void displayVIPReport() {
-        // getAge() parent ka function hai, par child ise direct use kar pa raha hai!
-        cout << "[VIP Portal]: VIP Pass ID: #" << specialPassID << " | Age: " << getAge() << endl;
-        
-        if (checkEligibility()) {
-            cout << "-> Status: VIP Access Granted! ✅ Direct Entry Allowed." << endl;
+    // 🔗 CONSTRUCTOR CHAINING: Child apna data le raha hai aur age ko parent constructor ko pass kar raha hai
+    SpecialVoter(int initialAge, int passID) : Voter(initialAge) {
+        specialPassID = passID;
+    }
+
+    // 🎯 FUNCTION OVERRIDING: Same name, same parameters as Parent!
+    void showStatus() {
+        cout << "[VIP Voter] Pass ID: #" << specialPassID << " | Age: " << age << endl;
+        if (age >= 60) {
+            cout << "-> Special Status: Senior Citizen VIP Lounge Access Granted! 🌟" << endl;
         } else {
-            cout << "-> Status: Access Denied! ❌ Underage VIP." << endl;
+            cout << "-> Special Status: Express Line Access Granted! ⚡" << endl;
         }
     }
 };
 
 int main() {
-    cout << "--- OOPs Inheritance Demo ---" << endl << endl;
+    cout << "--- OOPs Runtime Polymorphism Masterclass ---" << endl << endl;
 
-    // Hum Parent ka nahi, balki Child Class ka object banayenge
-    SpecialVoter vipPerson;
+    // Case 1: Standard Voter Object
+    cout << "Creating Regular Voter..." << endl;
+    Voter regularPerson(25);
+    regularPerson.showStatus(); // Parent wala version chalega
+    cout << "------------------------------------------" << endl << endl;
 
-    // Child Object se Parent ke functions ko call kiya
-    vipPerson.setAge(75); 
-    vipPerson.specialPassID = 9901; // Child ka apna data
-
-    // Child ka apna function chalaya
-    vipPerson.displayVIPReport();
+    // Case 2: VIP Voter Object
+    cout << "Creating VIP Voter..." << endl;
+    SpecialVoter vipPerson(65, 8821);
+    vipPerson.showStatus(); // Magic! Overridden Child wala version chalega!
 
     return 0;
 }
