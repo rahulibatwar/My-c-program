@@ -12,39 +12,41 @@ public:
     }
 };
 
-// Purana Function: Head par jodne ke liye
 void insertAtHead(Node* &head, int val) {
     Node* newNode = new Node(val);
     newNode->next = head;
     head = newNode;
 }
 
-// 🎯 DADA LOGIC: Aakhiri (Tail) mein element jodne ke liye
 void insertAtTail(Node* &head, int val) {
-    Node* newNode = new Node(val); // 1. Naya node banaya
-
-    // Base Case: Agar list pehle se khali hai
+    Node* newNode = new Node(val);
     if (head == NULL) {
         head = newNode;
-        cout << "[Tail Inserted]: " << val << " became the Head (List was empty)." << endl;
         return;
     }
-
-    // 2. Traversal: Ek temporary pointer ko aakhiri node tak le jayenge
     Node* temp = head;
     while (temp->next != NULL) {
-        temp = temp->next; // Agle node par jump
+        temp = temp->next;
     }
-
-    // 3. Connection: Aakhiri node ke next mein naya node jod diya
     temp->next = newNode;
-    cout << "[Tail Inserted]: " << val << " at the very end." << endl;
 }
 
-// List ko print karne ka function
+// 🎯 NAYA OPERATION: Linked List mein key search karne ke liye
+bool searchKey(Node* head, int key) {
+    Node* temp = head; // Shuruat se shuru karenge
+    
+    while (temp != NULL) {
+        if (temp->data == key) {
+            return true; // Key mil gayi!
+        }
+        temp = temp->next; // Agle node par move karein
+    }
+    return false; // Puri list check kar li, par nahi mili
+}
+
 void displayList(Node* head) {
     Node* temp = head;
-    cout << "Final Linked List Chain: ";
+    cout << "Linked List Chain: ";
     while (temp != NULL) {
         cout << temp->data << " -> ";
         temp = temp->next;
@@ -53,25 +55,36 @@ void displayList(Node* head) {
 }
 
 int main() {
-    cout << "--- DSA Linked List Masterclass: Head & Tail Insertion ---" << endl << endl;
+    cout << "--- DSA Linked List: Searching Masterclass ---" << endl << endl;
 
-    Node* head = NULL; // Shuruat mein empty list
+    Node* head = NULL;
 
-    // Step 1: Pehle dono tarike se insert karke check karte hain
-    insertAtTail(head, 10);  // List: 10 -> NULL (Khali thi isliye pehla bana)
-    insertAtTail(head, 20);  // List: 10 -> 20 -> NULL
-    insertAtTail(head, 30);  // List: 10 -> 20 -> 30 -> NULL
-
-    cout << "--- Current List State ---" << endl;
+    // Ek standard list taiyar karte hain
+    insertAtTail(head, 10);
+    insertAtTail(head, 20);
+    insertAtTail(head, 30);
+    insertAtHead(head, 5); // Ab list hai: 5 -> 10 -> 20 -> 30 -> NULL
+    
     displayList(head);
 
-    // Step 2: Ab mixture check karte hain (Head aur Tail dono sath mein)
-    cout << "--- Mixing Head and Tail Insertions ---" << endl;
-    insertAtHead(head, 5);   // Head par daala -> List ke aage lag jayega
-    insertAtTail(head, 40);  // Tail par daala -> List ke piche lag jayega
+    // 🔥 TEST 1: Jo element list mein MAJOUD HAI use search karte hain
+    int target1 = 20;
+    cout << "Searching for element: " << target1 << "..." << endl;
+    if (searchKey(head, target1)) {
+        cout << "✅ Success: Element " << target1 << " is present in the Linked List!" << endl;
+    } else {
+        cout << "❌ Error: Element " << target1 << " NOT found." << endl;
+    }
+    cout << "-----------------------------------------------" << endl << endl;
 
-    cout << "--------------------------------------------------------" << endl;
-    displayList(head);
+    // 🔥 TEST 2: Jo element list mein NAHI HAI use search karte hain
+    int target2 = 99;
+    cout << "Searching for element: " << target2 << "..." << endl;
+    if (searchKey(head, target2)) {
+        cout << "✅ Success: Element " << target2 << " is present in the Linked List!" << endl;
+    } else {
+        cout << "❌ Error: Element " << target2 << " NOT found in the system." << endl;
+    }
 
     return 0;
 }
