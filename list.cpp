@@ -12,12 +12,6 @@ public:
     }
 };
 
-void insertAtHead(Node* &head, int val) {
-    Node* newNode = new Node(val);
-    newNode->next = head;
-    head = newNode;
-}
-
 void insertAtTail(Node* &head, int val) {
     Node* newNode = new Node(val);
     if (head == NULL) {
@@ -31,60 +25,75 @@ void insertAtTail(Node* &head, int val) {
     temp->next = newNode;
 }
 
-// 🎯 NAYA OPERATION: Linked List mein key search karne ke liye
-bool searchKey(Node* head, int key) {
-    Node* temp = head; // Shuruat se shuru karenge
-    
-    while (temp != NULL) {
-        if (temp->data == key) {
-            return true; // Key mil gayi!
-        }
-        temp = temp->next; // Agle node par move karein
+// 🎯 FUNCTION: Specific value wale node ko delete karne ke liye
+void deleteNode(Node* &head, int val) {
+    // Case 0: Agar list pehle se khali hai
+    if (head == NULL) {
+        cout << "[System Error]: List is empty, cannot delete!" << endl;
+        return;
     }
-    return false; // Puri list check kar li, par nahi mili
+
+    // Case 1: Agar pehla hi node (Head) delete karna ho
+    if (head->data == val) {
+        Node* nodeToDelete = head;
+        head = head->next; // Head ko agle par shift kiya
+        delete nodeToDelete; // Purani memory clean ki
+        cout << "[Deleted]: " << val << " from the Head." << endl;
+        return;
+    }
+
+    // Case 2: Beech ka ya aakhiri node delete karna ho
+    Node* temp = head;
+    // Hum target node ke theek PEHLE wale node tak traverse karenge
+    while (temp->next != NULL && temp->next->data != val) {
+        temp = temp->next;
+    }
+
+    // Agar value list mein mili hi nahi
+    if (temp->next == NULL) {
+        cout << "[Notice]: Element " << val << " not found for deletion." << endl;
+        return;
+    }
+
+    // Link bypass logic
+    Node* nodeToDelete = temp->next; // Target node
+    temp->next = temp->next->next;   // Target ke agle node se pointer joda
+    delete nodeToDelete;             // Memory free ki
+    cout << "[Deleted]: " << val << " from the list." << endl;
 }
 
 void displayList(Node* head) {
     Node* temp = head;
-    cout << "Linked List Chain: ";
+    cout << "Current Linked List Chain: ";
     while (temp != NULL) {
         cout << temp->data << " -> ";
         temp = temp->next;
     }
-    cout << "NULL" << endl << endl;
+    cout << "NULL" << endl;
 }
 
 int main() {
-    cout << "--- DSA Linked List: Searching Masterclass ---" << endl << endl;
+    cout << "--- DSA Linked List: Deletion Masterclass ---" << endl << endl;
 
     Node* head = NULL;
 
-    // Ek standard list taiyar karte hain
+    // Standard list banana: 5 -> 10 -> 20 -> 30
+    insertAtTail(head, 5);
     insertAtTail(head, 10);
     insertAtTail(head, 20);
     insertAtTail(head, 30);
-    insertAtHead(head, 5); // Ab list hai: 5 -> 10 -> 20 -> 30 -> NULL
     
     displayList(head);
+    cout << "-----------------------------------------------" << endl;
 
-    // 🔥 TEST 1: Jo element list mein MAJOUD HAI use search karte hain
-    int target1 = 20;
-    cout << "Searching for element: " << target1 << "..." << endl;
-    if (searchKey(head, target1)) {
-        cout << "✅ Success: Element " << target1 << " is present in the Linked List!" << endl;
-    } else {
-        cout << "❌ Error: Element " << target1 << " NOT found." << endl;
-    }
-    cout << "-----------------------------------------------" << endl << endl;
+    // 🔥 TEST 1: Beech ka element (20) delete karte hain
+    deleteNode(head, 20);
+    displayList(head); // Output hona chahiye: 5 -> 10 -> 30 -> NULL
+    cout << "-----------------------------------------------" << endl;
 
-    // 🔥 TEST 2: Jo element list mein NAHI HAI use search karte hain
-    int target2 = 99;
-    cout << "Searching for element: " << target2 << "..." << endl;
-    if (searchKey(head, target2)) {
-        cout << "✅ Success: Element " << target2 << " is present in the Linked List!" << endl;
-    } else {
-        cout << "❌ Error: Element " << target2 << " NOT found in the system." << endl;
-    }
+    // 🔥 TEST 2: Head element (5) delete karte hain
+    deleteNode(head, 5);
+    displayList(head); // Output hona chahiye: 10 -> 30 -> NULL
 
     return 0;
 }
